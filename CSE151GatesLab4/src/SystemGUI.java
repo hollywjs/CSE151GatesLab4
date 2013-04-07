@@ -18,9 +18,12 @@ import javax.swing.JOptionPane;
 
 
 public class SystemGUI extends JFrame implements ActionListener{
+	
+	//Declare the buttons for the form
 	private JButton wireButton, scissorsButton, runButton, andGateButton, orGateButton, notGateButton, switchButton, clockButton,
 								nandGateButton, norGateButton, xorGateButton, lightButton, terminalButton;
 	
+	//Declare the Labels for the Gates
 	private JLabel andGateLabel  = new JLabel(ImageHelper.resizeIcon(new File("src/ANDGate.png")));
 	private JLabel orGateLabel   = new JLabel(ImageHelper.resizeIcon(new File("src/ORGate.png")));
 	private JLabel notGateLabel  = new JLabel(ImageHelper.resizeIcon(new File("src/NOTGate.png")));
@@ -32,12 +35,16 @@ public class SystemGUI extends JFrame implements ActionListener{
 	private JLabel lightLabel    = new JLabel(ImageHelper.resizeIcon(new File("src/LIGHTOFF.png")));
 	private JLabel terminalLabel = new JLabel(ImageHelper.resizeIcon(new File("src/TERMINAL.png")));
 	
+	//Declare the listeners
 	private Insets insets 					 = getInsets();
 	private MyMouseListener dragListener 	 = new MyMouseListener();
 	private MouseClickListener clickListener = new MouseClickListener();
+	
+	//Declare the arrays
 	private ArrayList<Gate> gates 			 = new ArrayList<Gate>();
 	//private ArrayList<SwitchGate> switches   = new ArrayList<SwitchGate>();
 	private ArrayList<Wire> wires 			 = new ArrayList<Wire>();
+	
 	private boolean makeGate 				 = false;
 	private int gateChosen 					 = 1;
 	private Dimension iconDim 				 = new Dimension(BUTTON_SIZE, BUTTON_SIZE);
@@ -47,6 +54,9 @@ public class SystemGUI extends JFrame implements ActionListener{
 	public static final int BUTTON_SIZE = 82, WINDOW_X = 800, WINDOW_Y = 540,AND_GATE = 0, OR_GATE = 1, NOT_GATE = 2,  SWITCH = 3, CLOCK = 4, 
 							  NAND_GATE = 5,  NOR_GATE = 6,XOR_GATE = 7,    LIGHT = 8,TERMINAL = 9;
 	
+	/**
+	 * Creates the buttons for the bottom panel
+	 */
 	public void makeOptions(){
 		wireButton     = new JButton(ImageHelper.resizeIcon(new File("src/WIRE.png")));	
 		scissorsButton = new JButton(ImageHelper.resizeIcon(new File("src/SCISSORS.png")));
@@ -65,12 +75,18 @@ public class SystemGUI extends JFrame implements ActionListener{
 		runButton.addActionListener(this);
 	}
 	
+	/**
+	 * Creates the position for the bottom panel
+	 */
 	public void positionOptions(){
 		wireButton.setBounds((BUTTON_SIZE + 5) + insets.left, (500 + insets.bottom) - iconDim.height,iconDim.width,iconDim.height);
 		scissorsButton.setBounds((BUTTON_SIZE*2 + 5) + insets.left, (500 + insets.bottom) - iconDim.height,iconDim.width,iconDim.height);
 		runButton.setBounds((BUTTON_SIZE*3 + 5) + insets.left, (500 + insets.bottom) - iconDim.height,iconDim.width,iconDim.height);
 	}
-
+	
+	/** 
+	 * Creates the Gates
+	 */
 	public void makeGates(){
 		
 		andGateButton = new JButton(ImageHelper.resizeIcon(new File("src/AndGate.png")));
@@ -145,7 +161,10 @@ public class SystemGUI extends JFrame implements ActionListener{
 		lightLabel.setBounds(5 + insets.left, (5 + BUTTON_SIZE) + insets.top,size.width,size.height);
 		terminalLabel.setBounds(5 + insets.left, (5 + BUTTON_SIZE) + insets.top,size.width,size.height);
 	}
-
+	
+	/**
+	 * Positions the Gates on the left panel
+	 */
 	public void positionGates(){
 		andGateButton.setBounds(5 + insets.left, 5 + insets.top,iconDim.width,iconDim.height);
 		orGateButton.setBounds(5 + insets.left, (5 + BUTTON_SIZE) + insets.top,iconDim.width,iconDim.height);
@@ -160,13 +179,19 @@ public class SystemGUI extends JFrame implements ActionListener{
 	}
 	
 	
-
+	/**
+	 * Overrides the paint method
+	 */
 	public void paint(Graphics g){
 			bi = new BufferedImage( this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			draw(bi.getGraphics());
 			g.drawImage(bi, 0, 0, null);
 	}
 	
+	/**
+	 * Used to draw the gates
+	 * @param g
+	 */
 	public void draw(Graphics g) {
         super.paint(g);
         g.setColor(Color.black);
@@ -199,6 +224,9 @@ public class SystemGUI extends JFrame implements ActionListener{
         }
     }
 
+	/**
+	 * Adds the buttons to the form
+	 */
 	public SystemGUI(){
 		super("CSE151 Gates Lab");
 		setLayout(null);
@@ -226,6 +254,10 @@ public class SystemGUI extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 
+	/**
+	 * Starts the system
+	 * @param args
+	 */
 	public static void main(String args[]){
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -234,6 +266,9 @@ public class SystemGUI extends JFrame implements ActionListener{
 		});
 	}
 	
+	/**
+	 * Used to check the logic of the gates
+	 */
 	public void checkLogic(){
 		for(Wire w : wires){
 			//w.getIsStart().LogicOperation();
@@ -279,6 +314,9 @@ public class SystemGUI extends JFrame implements ActionListener{
 		repaint();
 	}
 	
+	/**
+	 * Resets the logic when changes are made
+	 */
 	public void resetLogic(){
 		for(Wire w : wires){
 			w.setOn(false);
@@ -288,6 +326,9 @@ public class SystemGUI extends JFrame implements ActionListener{
 		}
 	}
 
+	/**
+	 * This is used as the mouse listener
+	 */
 	private class MouseClickListener implements MouseListener{
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -532,7 +573,10 @@ public class SystemGUI extends JFrame implements ActionListener{
 			}
 		}
 	}
-
+	
+	/**
+	 * This is used for showing icons as they are dragged
+	 */
 	private class MyMouseListener implements MouseMotionListener{
 		@Override
 		public void mouseDragged(MouseEvent e) {

@@ -7,10 +7,11 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
+//This does the same thing as the setIcon() method in the Gate class, do we need this class
 public class ImageHelper {
-	/*
-	 * Method to resize an image and return it as an imageicon. See detailed comments below.
+	
+	/**
+	 * Method to resize an image and return it as an imageIcon. See detailed comments below.
 	 */
 	public static ImageIcon resizeIcon(File src){
 		int newHeight = 80, newWidth = 80;        // Variables for the new height and width

@@ -1,16 +1,21 @@
-import java.io.File;
+
 
 public class AndGate extends Gate{
-	private boolean switch1;
-	private boolean switch2;
-	private boolean output;
 	
+	/**
+	 * Constructor of the AndGate, sets the image and calls the
+	 * setIcon method from the parent class, resizes image.
+	 */
 	public AndGate(){
 		super();
 		myIcon = "src/ANDGate.png";
 		setIcon();
 	}
 	
+	/**
+	 * Logic for the AndGate, if both inputs are on then the
+	 * output will be on
+	 */
 	public boolean LogicOperation(){
 		System.out.println("1: " + inputOne + ", 2: " + inputTwo);
 		if(inputOne == true && inputTwo == true){
@@ -19,25 +24,8 @@ public class AndGate extends Gate{
 		return false;
 	}
 	
-	public void setIcon(){
-			img = resizeIcon(new File(myIcon));
-	}
 	
-	public void setSwitch1(boolean input){
-		switch1 = input;
-	}
 	
-	public void setSwitch2(boolean input){
-		switch2 = input;
-	}
 	
-	public boolean getOutput(){
-		if(switch1 == false || switch2 == false){
-			return false;
-		}
-		else {
-			return true;
-		}
-		
-	}
+	
 }
